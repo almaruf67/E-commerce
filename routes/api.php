@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +18,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::middleware('auth:api')->group(function(){
+    Route::resource('/user', UserController::class);
+    // Route::get('/user/{id}', [UserController::class, 'show']);
+    Route::resource('/product', ProductController::class);
+
 });
+   
+Route::get('/test', function(){
+    p("working");
+}  );
+
+
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
